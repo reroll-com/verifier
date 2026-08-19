@@ -1,0 +1,52 @@
+{
+  "name": "@reroll/verifier",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Public source and standalone verifier for the versioned Reroll game engine.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reroll-com/verifier.git"
+  },
+  "homepage": "https://reroll-com.github.io/verifier/",
+  "engines": {
+    "bun": "1.3.14"
+  },
+  "packageManager": "bun@1.3.14",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    "./browser": {
+      "types": "./dist/src/browser.d.ts",
+      "default": "./src/browser.ts"
+    },
+    "./server": {
+      "types": "./dist/src/server.d.ts",
+      "default": "./src/server.ts"
+    },
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "test": "sh -c 'set -- $(find ./src -name \"*.unit.test.ts\" -print); [ \"$#\" -eq 0 ] && exit 0; bun test \"$@\"'",
+    "typecheck": "bunx tsc --noEmit && bunx tsc --noEmit -p verifier/tsconfig.json",
+    "clean": "rm -rf dist verifier/dist *.tsbuildinfo",
+    "build": "bun run clean && bunx tsc --build tsconfig.build.json && bun run verifier:build",
+    "verifier:dev": "vite --config verifier/vite.config.mts --host 0.0.0.0 --port 4173",
+    "verifier:build": "vite build --config verifier/vite.config.mts",
+    "verifier:preview": "vite preview --config verifier/vite.config.mts"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/bun": "1.3.14",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
+    "@vitejs/plugin-react": "^6.0.4",
+    "typescript": "^5.9.3",
+    "vite": "^8.1.5"
+  }
+}
